@@ -1,8 +1,5 @@
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === "production"
-      ? "https://nodejs-practice-251114.appspot.com"
-      : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/chatroom" : "/",
   devServer: {
     disableHostCheck: true,
     open: process.platform === "darwin",
