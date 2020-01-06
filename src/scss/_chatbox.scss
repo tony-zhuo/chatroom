@@ -1,0 +1,28 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+.chat--out {
+  align-self: flex-end;
+}
+.message {
+  width: 45%;
+  border-radius: 10px;
+  padding: 0.5em;
+  font-size: 1em;
+}
+.message-out {
+  background: #407fff;
+  color: white;
+}
+.message-in {
+  background: #f1f0f0;
+  color: black;
+}
+.time {
+  font-size: 0.8em;
+  margin: 0.5rem;
+}
+.name {
+  margin: 0.5rem;
+}

@@ -1,29 +1,67 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home";
+import header from "@/components/header";
+import login from "@/views/login";
+import signup from "@/views/signup";
+import store from "@/store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: "/login",
+    name: "login",
+    components: {
+      header: header,
+      mainbody: login
+    },
+    meta: {
+      title: "login"
+    }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/signup",
+    name: "signup",
+    components: {
+      header: header,
+      mainbody: signup
+    },
+    meta: {
+      title: "signup"
+    }
+  },
+  {
+    path: "/",
+    name: "Home",
+    components: {
+      header: header,
+      mainbody: Home
+    },
+    meta: {
+      title: "chatroom"
+    }
   }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  document.title = to.meta ? to.meta.title : document.title;
+  store.dispatch("user/getProfile");
+  if (to.name === "Home") {
+    if (localStorage.Authorization) {
+      next();
+    } else {
+      next({ name: "login" });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;
